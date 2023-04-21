@@ -23,7 +23,10 @@ public class CsvFilter {
         String[] fields = invoice.split(",");
         final String iva = fields[FIELDS_POSITION.IVA.ordinal()];
         final String igic = fields[FIELDS_POSITION.IGIC.ordinal()];
-        if(iva.isEmpty() || igic.isEmpty()){
+        if(
+            (iva.isEmpty() || igic.isEmpty()) && 
+            !(iva.isEmpty() && iva.isEmpty())
+            ){
             result.add(invoice);
         }
         return result;
