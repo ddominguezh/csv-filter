@@ -27,7 +27,7 @@ public class CsvFilter {
         final Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
         if(
             (iva.isEmpty() || igic.isEmpty()) && 
-            (pattern.matcher(iva).matches() && !igic.isEmpty())
+            !(!pattern.matcher(iva).matches() && igic.isEmpty())
             ){
             result.add(invoice);
         }
