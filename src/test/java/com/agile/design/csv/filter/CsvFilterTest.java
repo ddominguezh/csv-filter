@@ -38,4 +38,11 @@ public class CsvFilterTest {
         List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
         assertIterableEquals(filterLines, Arrays.asList(headerLine));
     }
+
+    @Test
+    public void exclude_lines_when_igic_is_not_a_number(){
+        final String invoiceLine = "1,02/05/2019,1000,810,,42d3,ACER Laptop,B76430134,";
+        List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
+        assertIterableEquals(filterLines, Arrays.asList(headerLine));
+    }
 }
