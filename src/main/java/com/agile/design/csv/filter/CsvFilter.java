@@ -24,14 +24,17 @@ public class CsvFilter {
         String[] fields = invoice.split(",");
         final String iva = fields[FIELDS_POSITION.IVA.ordinal()];
         final String igic = fields[FIELDS_POSITION.IGIC.ordinal()];
-        final Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
         if(
             (iva.isEmpty() || igic.isEmpty()) && 
-            (pattern.matcher(iva).matches() && pattern.matcher(iva).matches())
+            (isNumber(iva) && isNumber(iva))
             ){
             result.add(invoice);
         }
         return result;
     }
     
+    private boolean isNumber(String value){
+        final Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
+        return pattern.matcher(value).matches();
+    }
 }
