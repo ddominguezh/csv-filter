@@ -45,4 +45,11 @@ public class CsvFilterTest {
         List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
         assertIterableEquals(filterLines, Arrays.asList(headerLine));
     }
+
+    @Test
+    public void exclude_lines_with_both_identification_fields_populated_as_they_are_exclusive(){
+        final String invoiceLine = "11,02/05/2019,1000,810,19,,ACER Laptop,B76430134,74928379C";
+        List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
+        assertIterableEquals(filterLines, Arrays.asList(headerLine));
+    }
 }
