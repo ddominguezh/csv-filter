@@ -31,26 +31,12 @@ public class CsvFilter {
         if(
             isValidTaxFields(iva, igic) &&
             isValidIdentificationFields(cif, nif) &&
+            isValidGrossField(gross) &&
             isValidNetField(net, gross, iva, igic)
             ){
             result.add(invoice);
         }
         return result;
-    }
-
-    public boolean isValidNetField(String net, String gross, String iva, String igic){
-        return !net.isEmpty() && isNumber(net) && isValidCalculationNet(net, gross, iva, igic);
-    }
-
-    public boolean isValidCalculationNet(String net, String gross, String iva, String igic){
-        double tax = 0;
-        if(!iva.isEmpty()){
-            tax = Double.valueOf(iva);
-        }else if(!igic.isEmpty()){
-            tax = Double.valueOf(igic);
-        }
-        final double grossValue = Double.valueOf(gross);
-        return Double.valueOf(net).equals(grossValue - (grossValue * tax / 100.0));
     }
 
     private boolean isValidTaxFields(String iva, String igic){
@@ -76,5 +62,24 @@ public class CsvFilter {
     private boolean isValidFormatNIF(String value){
         final Pattern pattern = Pattern.compile("(\\d{8})([A-Z])$");
         return pattern.matcher(value).matches();
+    }
+
+    public boolean isValidGrossField(String gross){
+        return !gross.isEmpty();
+    }
+
+    public boolean isValidNetField(String net, String gross, String iva, String igic){
+        return !net.isEmpty() && isNumber(net) && isValidCalculationNet(net, gross, iva, igic);
+    }
+
+    public boolean isValidCalculationNet(String net, String gross, String iva, String igic){
+        double tax = 0;
+        if(!iva.isEmpty()){
+            tax = Double.valueOf(iva);
+        }else if(!igic.isEmpty()){
+            tax = Double.valueOf(igic);
+        }
+        final double grossValue = Double.valueOf(gross);
+        return Double.valueOf(net).equals(grossValue - (grossValue * tax / 100.0));
     }
 }
