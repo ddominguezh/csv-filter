@@ -47,6 +47,11 @@ public class CsvFilter {
 
     private boolean isValidIdentificationFields(String cif, String nif){
         return (cif.isEmpty() || nif.isEmpty())
-            && !(cif.isEmpty() && nif.isEmpty());
+            && !(!isValidCIF(cif) && nif.isEmpty());
+    }
+
+    private boolean isValidCIF(String value){
+        final Pattern pattern = Pattern.compile("^([ABCDEFGHJKLMNPQRSUVW])(\\d{7})([0-9A-J])$");
+        return pattern.matcher(value).matches();
     }
 }
