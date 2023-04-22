@@ -65,7 +65,7 @@ public class CsvFilter {
     }
 
     public boolean isValidGrossField(String gross){
-        return !gross.isEmpty();
+        return !gross.isEmpty() && isNumber(gross);
     }
 
     public boolean isValidNetField(String net, String gross, String iva, String igic){
