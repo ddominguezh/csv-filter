@@ -38,7 +38,7 @@ public class CsvFilter {
     }
 
     public boolean isValidNetField(String net){
-        return !net.isEmpty();
+        return !net.isEmpty() && isNumber(net);
     }
 
     private boolean isValidTaxFields(String iva, String igic){
