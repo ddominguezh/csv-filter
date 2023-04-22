@@ -59,4 +59,11 @@ public class CsvFilterTest {
         List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
         assertIterableEquals(filterLines, Arrays.asList(headerLine));
     }
+
+    @Test
+    public void exclude_lines_when_cif_has_bad_fornat(){
+        final String invoiceLine = "11,02/05/2019,1000,810,19,,ACER Laptop,B76365789R,";
+        List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
+        assertIterableEquals(filterLines, Arrays.asList(headerLine));
+    }
 }
