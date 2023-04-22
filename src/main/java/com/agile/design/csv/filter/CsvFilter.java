@@ -22,17 +22,23 @@ public class CsvFilter {
         result.add(lines.get(0));
         final String invoice = lines.get(1);
         String[] fields = invoice.split(",", -1);
+        final String net = fields[FIELDS_POSITION.NETO.ordinal()];
         final String iva = fields[FIELDS_POSITION.IVA.ordinal()];
         final String igic = fields[FIELDS_POSITION.IGIC.ordinal()];
         final String cif = fields[FIELDS_POSITION.CIF.ordinal()];
         final String nif = fields[FIELDS_POSITION.NIF.ordinal()];
         if(
+            isValidNetField(net) &&
             isValidTaxFields(iva, igic) &&
             isValidIdentificationFields(cif, nif)
             ){
             result.add(invoice);
         }
         return result;
+    }
+
+    public boolean isValidNetField(String net){
+        return !net.isEmpty();
     }
 
     private boolean isValidTaxFields(String iva, String igic){
