@@ -21,11 +21,11 @@ public class CsvFilter {
         List<String> result = new ArrayList<String>();
         result.add(lines.get(0));
         final String invoice = lines.get(1);
-        String[] fields = invoice.split(",");
+        String[] fields = invoice.split(",", -1);
         final String iva = fields[FIELDS_POSITION.IVA.ordinal()];
         final String igic = fields[FIELDS_POSITION.IGIC.ordinal()];
         final String cif = fields[FIELDS_POSITION.CIF.ordinal()];
-        final String nif = fields.length > FIELDS_POSITION.NIF.ordinal() ? fields[FIELDS_POSITION.NIF.ordinal()] : "";
+        final String nif = fields[FIELDS_POSITION.NIF.ordinal()];
         if(
             isValidTaxFields(iva, igic) &&
             isValidIdentificationFields(cif, nif)
@@ -46,6 +46,7 @@ public class CsvFilter {
     }
 
     private boolean isValidIdentificationFields(String cif, String nif){
-        return (cif.isEmpty() || nif.isEmpty());
+        return (cif.isEmpty() || nif.isEmpty())
+            && !(cif.isEmpty() && nif.isEmpty());
     }
 }
