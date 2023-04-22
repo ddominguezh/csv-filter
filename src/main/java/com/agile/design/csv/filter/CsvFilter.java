@@ -37,7 +37,7 @@ public class CsvFilter {
 
     private boolean isValidTaxFields(String iva, String igic){
         return (iva.isEmpty() || igic.isEmpty()) && 
-        (isNumber(iva) && isNumber(iva));
+        (isNumber(iva) || isNumber(iva));
     }
     
     private boolean isNumber(String value){
@@ -47,11 +47,16 @@ public class CsvFilter {
 
     private boolean isValidIdentificationFields(String cif, String nif){
         return (cif.isEmpty() || nif.isEmpty())
-            && !(!isValidCIF(cif) && nif.isEmpty());
+            && (isValidFormatCIF(cif) || isValidFormatNIF(nif));
     }
 
-    private boolean isValidCIF(String value){
+    private boolean isValidFormatCIF(String value){
         final Pattern pattern = Pattern.compile("^([ABCDEFGHJKLMNPQRSUVW])(\\d{7})([0-9A-J])$");
+        return pattern.matcher(value).matches();
+    }
+
+    private boolean isValidFormatNIF(String value){
+        final Pattern pattern = Pattern.compile("(\\d{8})([A-Z])$");
         return pattern.matcher(value).matches();
     }
 }
