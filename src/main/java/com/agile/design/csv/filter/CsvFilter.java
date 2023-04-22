@@ -24,17 +24,28 @@ public class CsvFilter {
         String[] fields = invoice.split(",");
         final String iva = fields[FIELDS_POSITION.IVA.ordinal()];
         final String igic = fields[FIELDS_POSITION.IGIC.ordinal()];
+        final String cif = fields[FIELDS_POSITION.CIF.ordinal()];
+        final String nif = fields.length > FIELDS_POSITION.NIF.ordinal() ? fields[FIELDS_POSITION.NIF.ordinal()] : "";
         if(
-            (iva.isEmpty() || igic.isEmpty()) && 
-            (isNumber(iva) && isNumber(iva))
+            isValidTaxFields(iva, igic) &&
+            isValidIdentificationFields(cif, nif)
             ){
             result.add(invoice);
         }
         return result;
     }
+
+    private boolean isValidTaxFields(String iva, String igic){
+        return (iva.isEmpty() || igic.isEmpty()) && 
+        (isNumber(iva) && isNumber(iva));
+    }
     
     private boolean isNumber(String value){
         final Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
         return pattern.matcher(value).matches();
+    }
+
+    private boolean isValidIdentificationFields(String cif, String nif){
+        return (cif.isEmpty() || nif.isEmpty());
     }
 }
