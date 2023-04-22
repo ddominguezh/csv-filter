@@ -94,4 +94,11 @@ public class CsvFilterTest {
         List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
         assertIterableEquals(filterLines, Arrays.asList(headerLine));
     }
+
+    @Test
+    public void exclude_lines_when_gross_is_empty(){
+        final String invoiceLine = "1,02/05/2019,,810,19,,ACER Laptop,P1234567A,";
+        List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
+        assertIterableEquals(filterLines, Arrays.asList(headerLine));
+    }
 }
