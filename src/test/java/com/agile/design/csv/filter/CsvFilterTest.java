@@ -87,4 +87,11 @@ public class CsvFilterTest {
         List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
         assertIterableEquals(filterLines, Arrays.asList(headerLine));
     }
+
+    @Test
+    public void exclude_lines_when_the_calculation_of_the_net_field_is_not_valid(){
+        final String invoiceLine = "1,02/05/2019,1000,811,19,,ACER Laptop,P1234567A,";
+        List<String> filterLines = new CsvFilter().filter(Arrays.asList(headerLine, invoiceLine));
+        assertIterableEquals(filterLines, Arrays.asList(headerLine, invoiceLine));
+    }
 }
